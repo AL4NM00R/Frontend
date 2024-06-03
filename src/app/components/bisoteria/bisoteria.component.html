@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BISUTERÍA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Aquí va tu CSS personalizado */
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <h1>BISUTERÍA</h1>
+            <nav>
+                <ul>
+                    <li><a href="inicio">Regresa Inicio</a></li>
+                    <li><a href="cart">Carrito</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="banner">
+        <div class="slideshow-container">
+          <div class="mySlides fade">
+            <img src="assets/img/bisoteria.jpg" style="width:100%">
+          </div>
+          <div class="mySlides fade">
+            <img src="assets/img/reparaciones.jpeg" style="width:100%">
+          </div>
+          <div class="mySlides fade">
+            <img src="assets/img/corte_laser.jpeg" style="width:100%">
+          </div>
+          <!-- Agrega más imágenes según sea necesario -->
+          <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
+          <a class="next" (click)="plusSlides(1)">&#10095;</a>
+        </div>
+      </section>
+
+    <form class="search-form">
+        <input type="text" placeholder="Buscar productos...">
+        <button type="submit">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+
+    <!-- Página principal de productos -->
+    <section class="productos" id="productos">
+        <div class="container">
+            <h2>Nuestros Productos</h2>
+            <div class="productos-grid">
+                <div class="producto" *ngFor="let producto of productos" (click)="showProductDetails(producto)">
+                    <img [src]="producto.imagen" [alt]="producto.nombre">
+                    <h3>{{ producto.nombre }}</h3>
+                    <p>{{ producto.descripcion }}</p>
+                    <button (click)="showProductDetails(producto)">Ver producto</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Página de detalles del producto -->
+    <section class="product-details" id="product-details" style="display:none;">
+        <div class="container" *ngIf="selectedProducto">
+            <img [src]="selectedProducto.imagen" alt="Imagen del Producto">
+            <h2>{{ selectedProducto.nombre }}</h2>
+            <p>{{ selectedProducto.descripcion }}</p>
+            <p>Precio: ${{ selectedProducto.precio }}</p>
+            <div class="buttons">
+                <button (click)="addToCart()">Añadir al Carrito</button>
+                <button (click)="continueShopping()">Seguir Comprando</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carrito de compras -->
+    <section class="cart" id="cart" style="display:none;">
+        <div class="container">
+            <h2>Carrito de Compras</h2>
+            <div *ngIf="carrito.length > 0; else emptyCart">
+                <div class="cart-item" *ngFor="let item of carrito">
+                    <img [src]="item.producto.imagen" alt="{{ item.producto.nombre }}">
+                    <div class="cart-item-details">
+                        <h3>{{ item.producto.nombre }}</h3>
+                        <p>Precio: ${{ item.producto.precio }}</p>
+                        <p>Cantidad:
+                            <button (click)="updateQuantity(item, -1)">-</button>
+                            {{ item.cantidad }}
+                            <button (click)="updateQuantity(item, 1)">+</button>
+                        </p>
+                        <button (click)="removeFromCart(item)">Eliminar</button>
+                    </div>
+                </div>
+                <div class="cart-summary">
+                    <p>Total a pagar: ${{ getTotal() }}</p>
+                    <button (click)="checkout()">Pagar</button>
+                    <button (click)="continueShopping()">Seguir Comprando</button>
+                </div>
+            </div>
+            <ng-template #emptyCart>
+                <p>Tu carrito está vacío.</p>
+                <button (click)="continueShopping()">Seguir Comprando</button>
+            </ng-template>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 KYBERNET. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Scripting de Angular -->
+    <script>
+        // Aquí va tu código TypeScript
+    </script>
+</body>
+
+</html>

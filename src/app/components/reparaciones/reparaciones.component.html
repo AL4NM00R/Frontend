@@ -1,0 +1,72 @@
+<head>
+  <!-- Otras etiquetas del head -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<header>
+  <div class="container">
+    <h1>SERVICIO REPARACIONES</h1>
+    <nav>
+      <ul>
+        <li><a href="inicio">Regresa Inicio</a></li>
+        <li><a href="#">Contacto</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="banner">
+  <div class="slideshow-container">
+    <div class="mySlides fade">
+      <img src="assets/img/bisoteria.jpg" style="width:100%">
+    </div>
+    <div class="mySlides fade">
+      <img src="assets/img/reparaciones.jpeg" style="width:100%">
+    </div>
+    <div class="mySlides fade">
+      <img src="assets/img/corte_laser.jpeg" style="width:100%">
+    </div>
+    <!-- Agrega más imágenes según sea necesario -->
+    <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
+    <a class="next" (click)="plusSlides(1)">&#10095;</a>
+  </div>
+</section>
+
+<form class="search-form">
+  <input type="text" placeholder="Buscar servicio...">
+  <button type="submit">
+    <i class="fas fa-search"></i> <!-- Ícono de lupa de Font Awesome -->
+  </button>
+</form>
+
+<section class="productos">
+  <div class="container">
+    <h2>Nuestros Servicios</h2>
+    <div class="productos-grid">
+      <div class="producto">
+        <img src="assets/img/r1.jpeg" alt="Producto 1">
+        <h3>Servicio 1</h3>
+        <p>Descripción del Servicio 1.</p>
+        <button style="background-color: #333; color: white;">ver servicio</button>
+      </div>
+      <div class="producto">
+        <img src="assets/img/r2.jpeg" alt="Producto 2">
+        <h3>Servicio 2</h3>
+        <p>Descripción del Servicio 2.</p>
+        <button style="background-color: #333; color: white;">ver servicio</button>
+      </div>
+      <div class="producto">
+          <img src="assets/img/r3.jpg" alt="Producto 2">
+          <h3>Servicio 2</h3>
+          <p>Descripción del Servicio 2.</p>
+          <button style="background-color: #333; color: white;">ver servicio</button>
+        </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2024 KYBERNET. Todos los derechos reservados.</p>
+  </div>
+</footer>
