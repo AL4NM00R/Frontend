@@ -8,33 +8,33 @@
     </style>
 </head>
 
-<section class="cart" id="cart" style="display:none;">
+<section class="cart" id="cart" style="display: none;">
     <div class="container">
-        <h2>Carrito de Compras</h2>
-        <div *ngIf="carrito.length > 0; else emptyCart">
-            <div class="cart-item" *ngFor="let item of carrito">
-                <img [src]="item.producto.imagen" alt="{{ item.producto.nombre }}">
-                <div class="cart-item-details">
-                    <h3>{{ item.producto.nombre }}</h3>
-                    <p>Precio: ${{ item.producto.precio }}</p>
-                    <p>Cantidad:
-                        <button (click)="updateQuantity(item, -1)">-</button>
-                        {{ item.cantidad }}
-                        <button (click)="updateQuantity(item, 1)">+</button>
-                    </p>
-                    <button (click)="removeFromCart(item)">Eliminar</button>
-                </div>
-            </div>
-            <div class="cart-summary">
-                <p>Total a pagar: ${{ getTotal() }}</p>
-                <button (click)="checkout()">Pagar</button>
-                <button (click)="continueShopping()">Seguir Comprando</button>
-            </div>
+      <h2>Carrito de Compras</h2>
+      <div *ngIf="(carrito$ | async)?.length > 0; else emptyCart">
+        <div class="cart-item" *ngFor="let item of carrito$ | async">
+          <img [src]="item.producto.imagen" alt="{{ item.producto.nombre }}">
+          <div class="cart-item-details">
+            <h3>{{ item.producto.nombre }}</h3>
+            <p>Precio: ${{ item.producto.precio }}</p>
+            <p>Cantidad:
+              <button (click)="updateQuantity(item, -1)">-</button>
+              {{ item.cantidad }}
+              <button (click)="updateQuantity(item, 1)">+</button>
+            </p>
+            <button (click)="removeFromCart(item)">Eliminar</button>
+          </div>
         </div>
-        <ng-template #emptyCart>
-            <p>Tu carrito está vacío.</p>
-            <button (click)="continueShopping()">Seguir Comprando</button>
-        </ng-template>
+        <div class="cart-summary">
+          <p>Total a pagar: ${{ getTotal() }}</p>
+          <button (click)="checkout()">Pagar</button>
+          <button (click)="continueShopping()">Seguir Comprando</button>
+        </div>
+      </div>
+      <ng-template #emptyCart>
+        <p>Tu carrito está vacío.</p>
+        <button (click)="continueShopping()">Seguir Comprando</button>
+      </ng-template>
     </div>
-</section>
-
+  </section>
+  

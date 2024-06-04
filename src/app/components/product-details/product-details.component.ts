@@ -1,33 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { CartService } from '../cart/cart.service'; // Suponiendo que tienes un servicio para manejar el carrito
+import { Component, Input } from '@angular/core';
+import { Producto } from '../../models/producto';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../store/app.state';
+import { addToCart } from '../../store/carrito/carrito.actions';
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css']
 })
-export class ProductDetailsComponent implements OnInit {
-  product: any;
+export class ProductDetailsComponent {
+  @Input() producto!: Producto;
 
-  constructor(private cartService: CartService, private router: Router) {}
-
-  ngOnInit(): void {
-    // Lógica para obtener el producto seleccionado
-    this.product = {
-      id: 1,
-      name: 'Producto 1',
-      description: 'Descripción detallada del producto 1.',
-      price: 20.00,
-      image: 'assets/img/b1.jpg'
-    };
-  }
+  constructor(private store: Store<AppState>) {}
 
   addToCart() {
-    this.cartService.addToCart(this.product);
+    this.store.dispatch(addToCart({ producto: this.producto }));
+    alert(`${this.producto.nombre} ha sido añadido al carrito.`);
   }
 
   continueShopping() {
-    this.router.navigate(['/productos']);
+    document.getElementById('productos')!.style.display = 'block';
+    document.getElementById('product-details')!.style.display = 'none';
+    this.producto = null!;
   }
 }

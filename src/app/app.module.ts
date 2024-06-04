@@ -1,16 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppComponent } from './app.component';
-
-// Modulos
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
+import { StoreModule } from '@ngrx/store';
 
 // Componentes
+import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -23,6 +21,10 @@ import { CorteLaserComponent } from './components/corte-laser/corte-laser.compon
 import { ReparacionesComponent } from './components/reparaciones/reparaciones.component';
 import { CartComponent } from './components/cart/cart.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
+
+// Reducers
+import { appReducers } from './store/app.state';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { ProductDetailsComponent } from './components/product-details/product-de
     CorteLaserComponent,
     ReparacionesComponent,
     CartComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    ProductListComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +53,7 @@ import { ProductDetailsComponent } from './components/product-details/product-de
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }), // ToastrModule added
+    StoreModule.forRoot(appReducers) // Importación de StoreModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true }
