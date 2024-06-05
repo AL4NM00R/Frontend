@@ -16,8 +16,11 @@
             <nav>
                 <ul>
                     <li><a href="inicio">Regresa Inicio</a></li>
-                    <li><a href="cart">Carrito</a></li>
                     <li><a href="#">Contacto</a></li>
+                    <div class="cart-icon" (click)="showCart()">
+                        <span class="cart-count">{{ carrito.length }}</span>
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
                 </ul>
             </nav>
         </div>
@@ -46,7 +49,6 @@
         </button>
     </form>
 
-    <!-- Página principal de productos -->
     <section class="productos" id="productos">
         <div class="container">
             <h2>Nuestros Productos</h2>
@@ -75,44 +77,62 @@
         </div>
     </section>
 
-    <!-- Carrito de compras -->
-    <section class="cart" id="cart" style="display:none;">
-        <div class="container">
-            <h2>Carrito de Compras</h2>
-            <div *ngIf="carrito.length > 0; else emptyCart">
-                <div class="cart-item" *ngFor="let item of carrito">
-                    <img [src]="item.producto.imagen" alt="{{ item.producto.nombre }}">
-                    <div class="cart-item-details">
-                        <h3>{{ item.producto.nombre }}</h3>
-                        <p>Precio: ${{ item.producto.precio }}</p>
-                        <p>Cantidad:
-                            <button (click)="updateQuantity(item, -1)">-</button>
-                            {{ item.cantidad }}
-                            <button (click)="updateQuantity(item, 1)">+</button>
-                        </p>
-                        <button (click)="removeFromCart(item)">Eliminar</button>
-                    </div>
-                </div>
-                <div class="cart-summary">
-                    <p>Total a pagar: ${{ getTotal() }}</p>
-                    <button (click)="checkout()">Pagar</button>
-                    <button (click)="continueShopping()">Seguir Comprando</button>
+<!-- Carrito de compras -->
+<section class="cart" id="cart" style="display:none;">
+    <div class="container">
+        <h2>Carrito de Compras</h2>
+        <div *ngIf="carrito.length > 0; else emptyCart">
+            <div class="cart-item" *ngFor="let item of carrito">
+                <img [src]="item.producto.imagen" alt="{{ item.producto.nombre }}">
+                <div class="cart-item-details">
+                    <h3>{{ item.producto.nombre }}</h3>
+                    <p>Precio: ${{ item.producto.precio }}</p>
+                    <p>Cantidad:
+                        <button (click)="updateQuantity(item, -1)">-</button>
+                        {{ item.cantidad }}
+                        <button (click)="updateQuantity(item, 1)">+</button>
+                    </p>
+                    <button (click)="removeFromCart(item)">Eliminar</button>
                 </div>
             </div>
-            <ng-template #emptyCart>
-                <p>Tu carrito está vacío.</p>
+            <div class="cart-summary">
+                <p>Total a pagar: ${{ getTotal() }}</p>
+                <button (click)="selectPaymentMethod('transferencia')">Pagar por Transferencia</button>
+                <button (click)="selectPaymentMethod('instalaciones')">Pagar en Instalaciones</button>
                 <button (click)="continueShopping()">Seguir Comprando</button>
-            </ng-template>
+            </div>
         </div>
-    </section>
+        <ng-template #emptyCart>
+            <p>Tu carrito está vacío.</p>
+            <button (click)="continueShopping()">Seguir Comprando</button>
+        </ng-template>
+    </div>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 KYBERNET. Todos los derechos reservados.</p>
+    <!-- Formulario de Transferencia -->
+    <div *ngIf="selectedPaymentMethod === 'transferencia'" class="payment-form">
+        <h3>Formulario de Transferencia</h3>
+        <form (submit)="processTransfer($event)">
+            <label for="bank">Banco:</label>
+            <input type="text" id="bank" name="bank" required>
+            <label for="account">Número de Cuenta:</label>
+            <input type="text" id="account" name="account" required>
+            <label for="amount">Monto:</label>
+            <input type="number" id="amount" name="amount" [value]="getTotalWithDiscount()" readonly>
+            <button type="submit">Enviar Transferencia</button>
+        </form>
+        <button (click)="cancelPayment()">Cancelar</button>
+    </div>
+
+    <!-- Selección de Instalaciones -->
+    <div *ngIf="selectedPaymentMethod === 'instalaciones'" class="payment-form">
+        <h3>Selecciona una Instalación</h3>
+        <div class="map-container">
+            <!-- Aquí incluirías el mapa interactivo -->
+            <div class="installation" *ngFor="let installation of installations" (click)="selectInstallation(installation)">
+                <p>{{ installation.name }}</p>
+                <p>{{ installation.address }}</p>
+            </div>
         </div>
-    </footer>
-
-
-</body>
-
-</html>
+        <button (click)="cancelPayment()">Cancelar</button>
+    </div>
+</section>

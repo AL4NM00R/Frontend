@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-
 interface Producto {
   nombre: string;
   descripcion: string;
@@ -14,13 +13,17 @@ interface CarritoItem {
   cantidad: number;
 }
 
+interface Installation {
+  name: string;
+  address: string;
+}
+
 @Component({
   selector: 'app-bisoteria',
   templateUrl: './bisoteria.component.html',
   styleUrls: ['./bisoteria.component.css']
 })
 export class BisoteriaComponent implements OnInit {
-
   slideIndex: number = 0;
   slides: HTMLElement[] = [];
   productos: Producto[] = [
@@ -34,13 +37,19 @@ export class BisoteriaComponent implements OnInit {
   ];
   carrito: CarritoItem[] = [];
   selectedProducto: Producto | null = null;
+  selectedPaymentMethod: string | null = null;
+  installations: Installation[] = [
+    { name: 'Instalación 1', address: 'Dirección 1' },
+    { name: 'Instalación 2', address: 'Dirección 2' },
+    { name: 'Instalación 3', address: 'Dirección 3' },
+  ];
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.slides = Array.from(document.getElementsByClassName('mySlides') as HTMLCollectionOf<HTMLElement>);
     this.showSlides(this.slideIndex);
-    setInterval(() => this.plusSlides(1), 2000); // Cambia la imagen cada 8 segundos
+    setInterval(() => this.plusSlides(1), 2000); // Cambia la imagen cada 2 segundos
   }
 
   showProductDetails(producto: Producto) {
@@ -48,8 +57,7 @@ export class BisoteriaComponent implements OnInit {
     document.getElementById('productos')!.style.display = 'none';
     document.getElementById('product-details')!.style.display = 'block';
     document.getElementById('cart')!.style.display = 'none';
-}
-
+  }
 
   addToCart() {
     if (this.selectedProducto) {
@@ -99,9 +107,38 @@ export class BisoteriaComponent implements OnInit {
     return this.carrito.reduce((sum, item) => sum + (item.producto.precio * item.cantidad), 0);
   }
 
+  getTotalWithDiscount() {
+    return (this.getTotal() * 0.9).toFixed(2);
+  }
+
   checkout() {
-    alert(`Total a pagar: $${this.getTotal().toFixed(2)}`);
-    // Aquí puedes añadir lógica adicional para procesar el pago
+    // Mostrar métodos de pago
+    this.selectedPaymentMethod = null; // Asegúrate de que no haya ningún método seleccionado inicialmente
+  }
+
+  selectPaymentMethod(method: string) {
+    this.selectedPaymentMethod = method;
+  }
+
+  cancelPayment() {
+    this.selectedPaymentMethod = null;
+  }
+
+  processTransfer(event: Event) {
+    event.preventDefault();
+    alert(`Transferencia procesada con un total de $${this.getTotalWithDiscount()}`);
+    this.clearCart();
+    this.continueShopping();
+  }
+
+  selectInstallation(installation: Installation) {
+    alert(`Has seleccionado ${installation.name}`);
+    this.clearCart();
+    this.continueShopping();
+  }
+
+  clearCart() {
+    this.carrito = [];
   }
 
   showSlides(index: number) {

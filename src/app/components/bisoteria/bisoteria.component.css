@@ -329,3 +329,53 @@ footer {
 .buttons button:hover {
   background-color: #0056b3;
 }
+
+.payment-form {
+  margin-top: 20px;
+}
+
+.payment-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-form form label {
+  margin-top: 10px;
+}
+
+.payment-form form input {
+  margin-top: 5px;
+  padding: 5px;
+  font-size: 16px;
+}
+
+.payment-form form button {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.payment-form form button:hover {
+  background-color: #45a049;
+}
+
+.map-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.installation {
+  border: 1px solid #ddd;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.installation:hover {
+  background-color: #f0f0f0;
+}
+
