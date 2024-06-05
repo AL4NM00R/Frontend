@@ -3,38 +3,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito de compras</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* Aquí va tu CSS personalizado */
-    </style>
 </head>
+
+<header>
+  <div class="container">
+      <h1>BISUTERÍA</h1>
+      <nav>
+          <ul>
+              <li><a href="bisoteria">Regresa Inicio</a></li>
+              <li><a href="cart">Carrito</a></li>
+              <li><a href="#">Contacto</a></li>
+          </ul>
+      </nav>
+  </div>
+</header>
 
 <section class="cart" id="cart" style="display: none;">
     <div class="container">
       <h2>Carrito de Compras</h2>
-      <div *ngIf="(carrito$ | async)?.length > 0; else emptyCart">
-        <div class="cart-item" *ngFor="let item of carrito$ | async">
-          <img [src]="item.producto.imagen" alt="{{ item.producto.nombre }}">
-          <div class="cart-item-details">
-            <h3>{{ item.producto.nombre }}</h3>
-            <p>Precio: ${{ item.producto.precio }}</p>
-            <p>Cantidad:
-              <button (click)="updateQuantity(item, -1)">-</button>
-              {{ item.cantidad }}
-              <button (click)="updateQuantity(item, 1)">+</button>
-            </p>
-            <button (click)="removeFromCart(item)">Eliminar</button>
+      <div *ngIf="(carrito$ | async) as carrito; else emptyCart">
+        <div *ngIf="carrito.length > 0">
+          <div class="cart-item" *ngFor="let item of carrito">
+            <img [src]="item.producto?.imagen" alt="{{ item.producto?.nombre }}">
+            <div class="cart-item-details">
+              <h3>{{ item.producto?.nombre }}</h3>
+              <p>Precio: ${{ item.producto?.precio }}</p>
+              <p>Cantidad:
+                <button (click)="updateQuantity(item, -1)">-</button>
+                {{ item.cantidad }}
+                <button (click)="updateQuantity(item, 1)">+</button>
+              </p>
+              <button (click)="removeFromCart(item)">Eliminar</button>
+            </div>
           </div>
-        </div>
-        <div class="cart-summary">
-          <p>Total a pagar: ${{ getTotal() }}</p>
-          <button (click)="checkout()">Pagar</button>
-          <button (click)="continueShopping()">Seguir Comprando</button>
+          <div class="cart-summary">
+            <p>Total a pagar: ${{ getTotal() }}</p>
+            <button (click)="checkout()">Pagar</button>
+            <button (click)="continueShopping()">Seguir Comprando</button>
+          </div>
         </div>
       </div>
       <ng-template #emptyCart>
         <p>Tu carrito está vacío.</p>
         <button (click)="continueShopping()">Seguir Comprando</button>
-      </ng-template>
+      </ng-template>      
     </div>
   </section>
   

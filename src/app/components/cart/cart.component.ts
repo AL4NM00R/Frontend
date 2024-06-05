@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { CarritoItem, CarritoState } from '../../store/carrito/carrito.state';
+import { CarritoItem } from '../../models/carrito-item'
+import { CarritoState } from '../../store/carrito/carrito.state';
 import { removeFromCart, updateQuantity } from '../../store/carrito/carrito.actions';
 
 @Component({
@@ -41,4 +42,5 @@ export class CartComponent {
     // Implementar la lógica para continuar comprando
     // Por ejemplo, navegar a la página de productos
   }
+  
 }

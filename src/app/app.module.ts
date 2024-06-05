@@ -53,7 +53,7 @@ import { appReducers } from './store/app.state';
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }), // ToastrModule added
-    StoreModule.forRoot(appReducers) // Importación de StoreModule
+    StoreModule.forRoot(appReducers), StoreModule.forRoot({}, {}) // Importación de StoreModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true }

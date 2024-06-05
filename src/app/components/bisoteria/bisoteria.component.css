@@ -288,3 +288,44 @@ footer {
 .cart-summary button:hover {
   background-color: #f2b900;
 }
+
+.product-details .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-info {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  gap: 20px; /* Add space between image and details */
+}
+
+.product-image {
+  width: 200px; /* Set a fixed width */
+  height: 200px; /* Set a fixed height */
+  object-fit: cover; /* Ensure the image covers the area without distortion */
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px; /* Space above the buttons */
+}
+
+.buttons button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.buttons button:hover {
+  background-color: #0056b3;
+}
